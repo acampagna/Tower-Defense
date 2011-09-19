@@ -11,6 +11,10 @@ public class Tower extends Actor {
 	public Tower() {
 		
 	}
+	
+	public Tower(String name) {
+		super(name);
+	}
 
 	public void update() {
 		// TODO Auto-generated method stub

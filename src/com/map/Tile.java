@@ -9,7 +9,8 @@ public class Tile extends Actor{
 	public int id;
 	public int sprite_id;
 	
-	public Tile(int id, int sprite_id, int x,int y) {
+	public Tile(String name, int id, int sprite_id, int x,int y) {
+		super(name);
 		this.id = id;
 		this.sprite_id = sprite_id;
 		this.x = x;

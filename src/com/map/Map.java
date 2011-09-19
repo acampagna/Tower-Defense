@@ -81,7 +81,7 @@ public class Map extends Group{
 		
 		for(int y=0;y<=17;y++){
 			for(int x=0;x<=21;x++){
-				tmp = new Tile(n,map[y][x],x*TILE_SIZE,(HEIGHT - 1 - y) * TILE_SIZE);
+				tmp = new Tile("tile"+n,n,map[y][x],x*TILE_SIZE,(HEIGHT - 1 - y) * TILE_SIZE);
 				System.out.println(tmp.toString());
 				this.addActor(tmp);
 				n++;

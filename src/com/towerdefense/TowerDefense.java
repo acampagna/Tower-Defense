@@ -2,7 +2,6 @@ package com.towerdefense;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actors.Label;
 import com.map.Map;
 import com.map.Tile;
 import com.towers.Laser;
+import com.towers.Tower;
 
 public class TowerDefense implements ApplicationListener, InputProcessor {
 
@@ -29,7 +29,9 @@ public class TowerDefense implements ApplicationListener, InputProcessor {
     public Stage					stage;
     public Group					gameGroup;
     public Group					uiGroup;
+    public Actor					dragged;
     Vector2 point = new Vector2();
+    Vector3 unprojected = new Vector3();
     BitmapFont font;
     ImmediateModeRenderer10 renderer;
 
@@ -106,34 +108,7 @@ public class TowerDefense implements ApplicationListener, InputProcessor {
     
 
     private void handleInput() {
-    	if(this.inputPhase == 0) {
-    		if(Gdx.input.isTouched(0)) {
 
-                stage.toStageCoordinates(Gdx.input.getX(), Gdx.input.getY(), point);
-                Actor actor = stage.hit(point.x, point.y);
-                if(actor != null) {
-                	//System.out.println(actor.toString());
-                	if(actor instanceof Tile) {
-                		Vector3 v = new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
-            			cam.unproject(v);
-            			Tile tile = (Tile)map.hit(v.x,v.y);
-            			if(tile != null) {
-            				tile.sprite_id = 5;
-            			}
-                	}
-                }
-    		}
-    		panCamera();
-    	} // End Idle
-    	
-    	if(this.inputPhase == 1) {
-    		
-    	} // End Dragging
-    	
-    	if(this.inputPhase == 2) {
-    		
-    	} // End Panning
-        
     }
     
     private void panCamera() {
@@ -202,13 +177,64 @@ public class TowerDefense implements ApplicationListener, InputProcessor {
 
 	@Override
 	public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
-		System.out.println("Touch Down");
-		return false;
+		System.out.println("touchDown");
+		if(inputPhase == 0) {
+    		if(Gdx.input.isTouched(0)) {
+    			unprojected.add(Gdx.input.getX(),Gdx.input.getY(),0);
+    			cam.unproject(unprojected);
+    			
+                stage.toStageCoordinates(Gdx.input.getX(), Gdx.input.getY(), point);
+                Actor actor = stage.hit(point.x, point.y);
+                if(actor != null) {
+                	//System.out.println(actor.toString());
+                	if(actor instanceof Tile) {
+                		inputPhase = 2;
+            			Tile tile = (Tile)map.hit(unprojected.x,unprojected.y);
+            			if(tile != null) {
+            				//tile.sprite_id = 5;
+            			}
+                	} else {
+                		inputPhase = 1;
+                		Tower tmp = (Tower)actor;
+                		Class c;
+                		
+						try {
+							c = Class.forName("com.towers.Laser");
+							dragged = (Actor)c.newInstance();
+							gameGroup.addActor(dragged);
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							inputPhase = 0;
+							e.printStackTrace();
+						} catch (InstantiationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
+                	}
+                }
+    		}
+    	} // End Idle
+
+    	return true;
 	}
 
 	@Override
 	public boolean touchDragged(int arg0, int arg1, int arg2) {
-		return false;
+		if(inputPhase == 1) {
+			//unprojected.add(Gdx.input.getX(),Gdx.input.getY(),0);
+			//cam.unproject(unprojected);
+			stage.toStageCoordinates(Gdx.input.getX(), Gdx.input.getY(), point);
+			dragged.x = point.x-(dragged.width/2);
+			dragged.y = point.y-(dragged.height/2);
+		}
+		if(inputPhase == 2) {
+    		panCamera();
+    	} // End Panning
+		
+		return true;
 	}
 
 	@Override
@@ -219,6 +245,7 @@ public class TowerDefense implements ApplicationListener, InputProcessor {
 
 	@Override
 	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
-		return false;
+		inputPhase = 0;
+		return true;
 	}
 }

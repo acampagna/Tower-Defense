@@ -7,6 +7,10 @@ public class RedTower extends Tower {
 		
 	}
 	
+	public RedTower(String name) {
+		super(name);
+	}
+	
 	public void render() {
 		
 	}
