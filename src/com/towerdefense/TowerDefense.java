@@ -81,14 +81,10 @@ public class TowerDefense implements ApplicationListener, InputProcessor {
             handleInput();
             GL10 gl = Gdx.graphics.getGL10();
             
-            // Camera --------------------- /
             gl.glClearColor(1,1,1,1);
             gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
             
             cam.update();  
-            cam.apply(gl);
-
-            // Texturing --------------------- /
             
             map.batch.setProjectionMatrix(cam.combined);
 
