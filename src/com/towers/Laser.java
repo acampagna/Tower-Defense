@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Laser extends RedTower {
+public class Laser extends Tower {
 	
 	public Laser() {
 		System.out.println("Laser:Red Tower Created");

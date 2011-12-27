@@ -1,0 +1,21 @@
+Creating a map:
+
+North: n
+East: e
+South: s
+West: w
+
+Waypoint Syntax: w:dir
+Example:  w:s - Creates a waypoint that directs the unit south from there to the next waypoint
+
+Start Point Syntax: s:id
+Example: s:00 - Identifies a starting point with an arbitrary id number. Connects to it's associated end point
+
+End Point Syntax: e:id
+Example: e:00 - Identifies an end point with an arbitrary id number. Connects to it's associated start point
+
+Doodad Sytax: d:id
+Example: d:05 - Creates doodad number 5 at that location. Doodads can be places anywhere except waypoints, start points, end points
+
+
+Based on start, end, and waypoints the game will automatically generate the level

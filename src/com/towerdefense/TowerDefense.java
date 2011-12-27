@@ -36,7 +36,7 @@ public class TowerDefense implements ApplicationListener, InputProcessor {
     ImmediateModeRenderer10 renderer;
 
     
-    public int						inputPhase; //0 = idle, 1 = dragging, 2 = panning
+    public int inputPhase; //0 = idle, 1 = dragging, 2 = panning
 
     @Override
     public void create() {
@@ -62,7 +62,6 @@ public class TowerDefense implements ApplicationListener, InputProcessor {
         gameGroup.addActor(map);
         
 		laser = new Laser();
-		
 		uiGroup.addActor(laser);
 		
 		Label fps = new Label("fps", font, "fps: 0");
@@ -92,7 +91,7 @@ public class TowerDefense implements ApplicationListener, InputProcessor {
 
             gl.glEnable(GL10.GL_TEXTURE_2D);
             
-            //laser.render();
+            laser.render();
             
             map.render();
             

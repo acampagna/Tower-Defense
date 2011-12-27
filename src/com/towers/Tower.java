@@ -6,7 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Tower extends Actor {
 
+	public String name;
 	protected Texture texture;
+	public int lastShot;
+	public int level;
+	public int cost;
 	
 	public Tower() {
 		
@@ -17,18 +21,12 @@ public class Tower extends Actor {
 	}
 
 	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void render() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -44,19 +42,15 @@ public class Tower extends Actor {
 	
 	@Override
     public Actor hit (float x, float y) {
-            return x > 0 && y > 0 && x < width && y < height ? this : null;
+        return x > 0 && y > 0 && x < width && y < height ? this : null;
     }
 
 	@Override
 	public void touchDragged(float arg0, float arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void touchUp(float arg0, float arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
